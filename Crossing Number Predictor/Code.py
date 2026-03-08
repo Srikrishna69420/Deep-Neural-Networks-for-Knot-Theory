@@ -62,8 +62,8 @@ def main(image,r):
     crossings = find_crossings(g,r)
     return len(crossings)
 
-
-image_path = "C:\\Users\\kittu\\OneDrive\\Desktop\\Project\\Code\\image.png"
+base_dir = os.path.dirname(os.path.abspath(__file__))
+image_path = os.path.join(base_dir, "image")
 print("Hello, I will find your crossing number!!!!!!!!!")
 r = 5
 while True:
@@ -78,6 +78,7 @@ while True:
         else:
             print("Hmm... I see. Let me try again....")
             r -= 1
+
 
 
 

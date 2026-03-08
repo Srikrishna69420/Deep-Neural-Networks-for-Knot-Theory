@@ -1,2 +1,2 @@
 # Deep-Neural-Networks-for-Knot-Theory
-In this project, I will using my knowledge of topology and neural networks to build a few programs
+In this project, I will using my knowledge of topology and neural networks to build a few programs. The folder named Deep Neural Network has the code to differentiate trefoil knot from others. This is a very simple project, infact it is my first DL project. The other folder named Crossing Number Predictor has the code to find the number of crossing number of the given knot. This code does not use ML, but rather was written to test my coding skills. 

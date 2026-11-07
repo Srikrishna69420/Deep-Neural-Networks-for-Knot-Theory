@@ -1,0 +1,3 @@
+numpy
+matplotlib
+# Add the framework used by the neural-network implementation if needed.

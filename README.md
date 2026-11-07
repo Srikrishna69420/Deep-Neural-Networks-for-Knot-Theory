@@ -5,7 +5,7 @@ An exploratory project applying image processing and a small neural network to k
 1. **Trefoil classifier** — a NumPy fully connected neural network classifying images as trefoil or not-trefoil.
 2. **Crossing-candidate detector** — an image-processing pipeline that thresholds a knot image, skeletonizes it, builds a pixel-neighbour graph, and counts candidate crossings. This is not a neural network and is only a heuristic image-based estimate.
 
-The project was carried out under Prof. Rama Mishra at IISER Pune as a summer-student project.
+The project was carried out under Prof. Rama Mishra at IISER Pune as a summer student project.
 
 ## Modular implementation (recommended)
 

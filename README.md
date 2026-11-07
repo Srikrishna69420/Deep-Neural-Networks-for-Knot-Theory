@@ -41,9 +41,9 @@ Use `--help` after either subcommand for options. Run commands from the reposito
 - `src/knot_theory/crossings.py` — thresholding, skeletonization, graph construction, and candidate detection.
 - `src/knot_theory/cli.py` — command-line interface.
 - `tests/` — small unit tests for the classifier and graph pipeline.
-- `Deep Neural Network/NN.py` — original classifier script, retained unchanged.
+- `Deep Neural Network/NN.py` — original classifier script.
 - `Deep Neural Network/data/` — class images and test image.
-- `Crossing Number Predictor/Code.py` — original crossing detector, retained unchanged.
+- `Crossing Number Predictor/Code.py` — original crossing detector.
 - `Crossing Number Predictor/image.png` — bundled sample diagram.
 
 ## Method overview

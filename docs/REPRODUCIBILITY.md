@@ -1,43 +1,34 @@
 # Reproducibility and implementation notes
 
-## Environment
+## Install and run
 
-Install dependencies from the repository root:
+Install the root-level dependencies and package:
 
 ```bash
 python -m pip install -r requirements.txt
+python -m pip install -e .
+python -m knot_theory.cli classify --help
+python -m knot_theory.cli crossings --help
 ```
 
-The trefoil classifier uses NumPy and Pillow. The crossing-number script imports OpenCV, scikit-image, NetworkX, NumPy, and Matplotlib. The dependency list includes both sets.
+Run from the repository root so the default paths resolve to the checked-in image folders.
 
 ## Trefoil classifier
 
-Run from the classifier directory:
+The default classifier command reads images from `Deep Neural Network/data/not_trefoil/` and `Deep Neural Network/data/trefoil/`, trains the five-layer dense network for 1,000 full-batch epochs, then predicts `Deep Neural Network/data/test/img.png`.
 
-```bash
-cd "Deep Neural Network"
-python NN.py
-```
+Images are grayscale, resized to 64×64, and normalized to [0, 1]. The network uses ReLU hidden layers, sigmoid output, binary cross-entropy, and L2 weight regularization. Defaults are seed 0, learning rate 0.01, and L2 coefficient 1e-3. The split is not divided into training/validation sets; the bundled test image is one example, not a robust test protocol.
 
-The script expects `data/not_trefoil/`, `data/trefoil/`, and `data/test/img.png` relative to that directory. It resizes grayscale images to 64×64, flattens them, trains a fully connected network, and prints an example prediction.
+The modular implementation uses NumPy's `default_rng` for initialization and float32 arrays. This differs from the legacy script's global `np.random.seed(0)` initialization, so bit-for-bit or metric equivalence is not promised. The original `NN.py` remains untouched.
 
-The script sets NumPy's seed to zero. It does not currently define a train/validation split or save model weights. The test folder is used for a single example prediction, not a reported held-out evaluation protocol.
+## Crossing-candidate detector
 
-## Crossing-number detector
+The default image is `Crossing Number Predictor/image.png`. The pipeline is grayscale loading → inverted Otsu thresholding → skeletonization → 8-neighbour graph → degree-at-least-four candidate nodes → radius-based de-duplication.
 
-The intended pipeline is grayscale loading → Otsu thresholding → skeletonization → 8-neighbour graph construction → candidate crossing detection by node degree and spatial filtering.
+The method is heuristic. Skeleton pixel connectivity can create clusters or spurious high-degree nodes, and the result should not be presented as a mathematically certified crossing number. The modular CLI fixes the legacy script's missing `os` import and incorrect default filename; the original script is preserved unchanged.
 
-Known issues in the checked-in original script:
-- It calls `os.path` but does not import `os`.
-- It constructs a path named `image`, while the checked-in asset is named `image.png`.
-- The script's interactive loop executes at module level.
+## Tests and limitations
 
-These are documented rather than silently changed as part of this structural cleanup. Fixing them should be a separate, reviewable code-change commit.
+Run `python -m unittest discover -s tests`. Tests cover model forward/prediction shape, a small parameter update, and a synthetic crossing-shaped skeleton. They do not train on the full image collection or validate crossing detection on a benchmark dataset.
 
-## Reproducibility
-
-Record Python and package versions, the exact input image, image preprocessing parameters, network hyperparameters, and random seeds. The classifier currently hard-codes image size, learning rate, epoch count, and regularization strength. The crossing detector uses a manually adjusted neighbourhood radius.
-
-## Limitations
-
-The available class images are small in number. Results from this dataset should be treated as a proof of concept, not evidence of generalization to arbitrary knot diagrams.
+For research reporting, record Python, NumPy, Pillow, OpenCV, scikit-image, NetworkX versions; random seed; image preprocessing; model hyperparameters; and the exact input images.

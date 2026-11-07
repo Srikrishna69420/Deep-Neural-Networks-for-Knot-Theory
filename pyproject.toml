@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "knot-theory-image-experiments"
+version = "0.1.0"
+description = "Exploratory trefoil image classifier and crossing candidate detector"
+requires-python = ">=3.9"
+dependencies = ["networkx>=2.8", "numpy>=1.23", "opencv-python>=4.7", "Pillow>=9.0", "scikit-image>=0.20"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
